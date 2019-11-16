@@ -14,54 +14,54 @@ An API to get randomly generated codenames! It also allows you to mimic degradat
     
 ## But does the failure mode work?!
 
-### Failure Mode: Latency
+### Latency
 
-    ➜  /Users/nemo/go/bin/hey -c 100 -n 100 "http://localhost:8081/?latency=2500"
+    ➜  /Users/nemo/go/bin/hey -c 100 -n 100 "http://localhost:8081/?latency=random"
 
     Summary:
-    Total:        2.5168 secs
-    Slowest:      2.5160 secs
-    Fastest:      2.5100 secs
-    Average:      2.5133 secs
-    Requests/sec: 39.7329
+    Total:        2.8826 secs
+    Slowest:      2.8816 secs
+    Fastest:      0.0114 secs
+    Average:      1.3501 secs
+    Requests/sec: 34.6911
     
-    Total data:   1563 bytes
+    Total data:   1545 bytes
     Size/request: 15 bytes
 
     Response time histogram:
-    2.510 [1]     |■■■
-    2.511 [6]     |■■■■■■■■■■■■■■■■
-    2.511 [4]     |■■■■■■■■■■■
-    2.512 [13]    |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-    2.512 [8]     |■■■■■■■■■■■■■■■■■■■■■
-    2.513 [9]     |■■■■■■■■■■■■■■■■■■■■■■■■
-    2.514 [14]    |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-    2.514 [9]     |■■■■■■■■■■■■■■■■■■■■■■■■
-    2.515 [15]    |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-    2.515 [11]    |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-    2.516 [10]    |■■■■■■■■■■■■■■■■■■■■■■■■■■■
+    0.011 [1]     |■■■
+    0.298 [12]    |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+    0.585 [13]    |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+    0.872 [10]    |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+    1.160 [10]    |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+    1.447 [9]     |■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+    1.734 [10]    |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+    2.021 [8]     |■■■■■■■■■■■■■■■■■■■■■■■■■
+    2.308 [8]     |■■■■■■■■■■■■■■■■■■■■■■■■■
+    2.595 [9]     |■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+    2.882 [10]    |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 
 
     Latency distribution:
-    10% in 2.5111 secs
-    25% in 2.5119 secs
-    50% in 2.5135 secs
-    75% in 2.5147 secs
-    90% in 2.5155 secs
-    95% in 2.5158 secs
-    99% in 2.5160 secs
+    10% in 0.2483 secs
+    25% in 0.5838 secs
+    50% in 1.3530 secs
+    75% in 2.1335 secs
+    90% in 2.6145 secs
+    95% in 2.8230 secs
+    99% in 2.8816 secs
 
     Details (average, fastest, slowest):
-    DNS+dialup:   0.0065 secs, 2.5100 secs, 2.5160 secs
-    DNS-lookup:   0.0039 secs, 0.0026 secs, 0.0051 secs
-    req write:    0.0002 secs, 0.0000 secs, 0.0021 secs
-    resp wait:    2.5066 secs, 2.5004 secs, 2.5102 secs
-    resp read:    0.0001 secs, 0.0000 secs, 0.0003 secs
+    DNS+dialup:   0.0063 secs, 0.0114 secs, 2.8816 secs
+    DNS-lookup:   0.0039 secs, 0.0028 secs, 0.0046 secs
+    req write:    0.0001 secs, 0.0000 secs, 0.0009 secs
+    resp wait:    1.3436 secs, 0.0048 secs, 2.8743 secs
+    resp read:    0.0001 secs, 0.0000 secs, 0.0001 secs
 
     Status code distribution:
     [200] 100 responses
 
-### Failure Mode: Error (StatusCode)
+### Error (StatusCode)
 
     ➜  /Users/nemo/go/bin/hey -c 100 -n 100 "http://localhost:8081/?error=random"
 

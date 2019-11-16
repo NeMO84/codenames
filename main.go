@@ -172,12 +172,19 @@ Command line options:
 	go func() {
 		var h http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			// Mimic latency
-			latency := r.URL.Query().Get("latency")
-			if latency != "" {
-				if l, err := strconv.Atoi(latency); err == nil {
-					log.Printf("[ERROR] Latency mode produced Latency(%v) \n", l)
-					time.Sleep(time.Duration(l) * time.Millisecond)
+			paramLatency := r.URL.Query().Get("latency")
+			if paramLatency != "" {
+				latency := 1
+				switch paramLatency {
+				case "random":
+					latency = rand.Intn(3000)
+				default:
+					if l, err := strconv.Atoi(paramLatency); err == nil {
+						latency = l
+					}
 				}
+				log.Printf("[ERROR] Latency mode produced Latency(%v) \n", latency)
+				time.Sleep(time.Duration(latency) * time.Millisecond)
 			}
 
 			// Mimic error status code
