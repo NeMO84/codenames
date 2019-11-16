@@ -214,7 +214,7 @@ Command line options:
 			LogWriter:  accessLogs,
 		}
 
-		err := http.ListenAndServe(fmt.Sprintf(":%d", *optPort), gohm.New(h, config))
+		err := http.ListenAndServe(fmt.Sprintf("0.0.0.0:%d", *optPort), gohm.New(h, config))
 		if err != nil && err != http.ErrServerClosed {
 			fatal(err)
 		}
