@@ -12,7 +12,9 @@ An API to get randomly generated codenames! It also allows you to mimic degradat
     $ ➜  curl -sS localhost:8081
     Alive Badger
     
-## But does the failure mode work?!
+## Failure Modes
+
+How does it work?!!
 
 ### Latency
 
@@ -112,4 +114,29 @@ An API to get randomly generated codenames! It also allows you to mimic degradat
     [404] 20 responses
     [409] 19 responses
     [500] 10 responses
-    
+
+## Docker
+
+See Dockerfile for more details.
+
+    # Build
+    ➜  docker build -t patelify/codenames .
+
+    # Run 
+    ➜  docker run -it -p 3002:8081 --rm patelify/codenames
+
+    # get a random codename
+    export DOCKERMACHINE=$(docker-machine ip)
+    ➜  curl "http://$DOCKERMACHINE:3001/"
+    Hungry Alligator
+
+    # mimic latency
+    ➜  curl "http://$DOCKERMACHINE:3001/?latency=250"
+    Hungry Alligator
+
+    # mimic error code
+    curl "http://$DOCKERMACHINE:3001/?error=random" -I
+    HTTP/1.1 401 Unauthorized
+    Date: Sat, 16 Nov 2019 05:11:43 GMT
+    Content-Length: 11
+    Content-Type: text/plain; charset=utf-8

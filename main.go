@@ -183,7 +183,7 @@ Command line options:
 						latency = l
 					}
 				}
-				log.Printf("[ERROR] Latency mode produced Latency(%v) \n", latency)
+				log.Printf("[WARN] Latency mode produced Latency(%v) \n", latency)
 				time.Sleep(time.Duration(latency) * time.Millisecond)
 			}
 
