@@ -123,7 +123,7 @@ See Dockerfile for more details.
     ➜  docker build -t patelify/codenames .
 
     # Run 
-    ➜  docker run -it -p 3002:8081 --rm patelify/codenames
+    ➜  docker run -it -p 3001:8081 --rm patelify/codenames
 
     # I'm using docker-machine w/ VirtualBox
     ➜  export DOCKERMACHINE=$(docker-machine ip)
