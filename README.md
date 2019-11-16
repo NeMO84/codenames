@@ -112,3 +112,4 @@ An API to get randomly generated codenames! It also allows you to mimic degradat
     [404] 20 responses
     [409] 19 responses
     [500] 10 responses
+    
