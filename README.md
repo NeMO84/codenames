@@ -125,17 +125,19 @@ See Dockerfile for more details.
     # Run 
     ➜  docker run -it -p 3002:8081 --rm patelify/codenames
 
-    # get a random codename
-    export DOCKERMACHINE=$(docker-machine ip)
+    # I'm using docker-machine w/ VirtualBox
+    ➜  export DOCKERMACHINE=$(docker-machine ip)
+
+    # get a random codename 
     ➜  curl "http://$DOCKERMACHINE:3001/"
     Hungry Alligator
 
-    # mimic latency
+    # mimic latency (in milliseconds)
     ➜  curl "http://$DOCKERMACHINE:3001/?latency=250"
     Hungry Alligator
 
     # mimic error code
-    curl "http://$DOCKERMACHINE:3001/?error=random" -I
+    ➜  curl "http://$DOCKERMACHINE:3001/?error=random" -I
     HTTP/1.1 401 Unauthorized
     Date: Sat, 16 Nov 2019 05:11:43 GMT
     Content-Length: 11
