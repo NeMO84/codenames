@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strconv"
 	"sync/atomic"
 	"syscall"
 	"time"
@@ -62,7 +63,7 @@ func newline(s string) string {
 // stderr formats and prints its arguments to standard error after prefixing
 // them with the program name.
 func stderr(f string, args ...interface{}) {
-	os.Stderr.Write([]byte(ProgramName + ": " + newline(fmt.Sprintf(f, args...))))
+	os.Stderr.Write([]byte(programName + ": " + newline(fmt.Sprintf(f, args...))))
 }
 
 // usage prints the error to standard error, prints message how to get help,
@@ -89,7 +90,8 @@ func warning(f string, args ...interface{}) {
 	}
 }
 
-var ProgramName string
+var programName string
+var errorStatusCodes = []int{401, 402, 403, 404, 409, 500}
 
 var (
 	optHelp    = golf.BoolP('h', "help", false, "Print command line help and exit")
@@ -168,7 +170,32 @@ Command line options:
 	}
 
 	go func() {
-		var h http.Handler = http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		var h http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			// Mimic latency
+			latency := r.URL.Query().Get("latency")
+			if latency != "" {
+				if l, err := strconv.Atoi(latency); err == nil {
+					log.Printf("[ERROR] Latency mode produced Latency(%v) \n", l)
+					time.Sleep(time.Duration(l) * time.Millisecond)
+				}
+			}
+
+			// Mimic error status code
+			errorStatusCode := r.URL.Query().Get("error")
+			statusCode := 0
+			if errorStatusCode != "" {
+				switch errorStatusCode {
+				case "random":
+					statusCode = errorStatusCodes[rand.Intn(len(errorStatusCodes))]
+				default:
+					if sc, err := strconv.Atoi(errorStatusCode); err == nil {
+						statusCode = sc
+					}
+				}
+				log.Printf("[ERROR] Error mode produced StatusCode(%v) \n", statusCode)
+				w.WriteHeader(statusCode)
+			}
+
 			tuple := adjectives[rand.Intn(len(adjectives))] + " " + animals[rand.Intn(len(animals))] + "\n"
 			w.Write([]byte(tuple))
 			atomic.AddUint64(&total, 1)
